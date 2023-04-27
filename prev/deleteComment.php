@@ -3,7 +3,7 @@ require_once 'DB.php';
 
 if(isset($query)) {
     $commentId = substr($query, 3);
-    $dbInstance = DB::getInstance();
+    $dbInstance = DBConnection::getInstance();
     $sql = <<<SQL
     DELETE 
     FROM comments 
