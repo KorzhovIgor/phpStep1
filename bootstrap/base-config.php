@@ -1,4 +1,5 @@
 <?php
+
 define('DATABASE', 'mysql');
 define('HOST', 'localhost');
 define('DBNANE', 'stratdb');

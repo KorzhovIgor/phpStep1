@@ -1,5 +1,6 @@
 <?php
-require_once PATH_TO_PROJECT.'/app/models/User.php';
+
+require_once PATH_TO_PROJECT . '/app/models/User.php';
 
 class UserFactory
 {
@@ -10,7 +11,8 @@ class UserFactory
         $this->user = new User();
     }
 
-    public function run() {
+    public function run()
+    {
         $params = [
             'firstname' => self::getRandomString(random_int(4, 30)),
             'lastname' => self::getRandomString(random_int(5, 30)),
@@ -18,13 +20,15 @@ class UserFactory
         $this->user->store($params['firstname'], $params['lastname']);
     }
 
-    protected static function getRandomString(int $length = 16): string {
+    protected static function getRandomString(int $length = 16): string
+    {
         $stringSpace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $stringLength = strlen($stringSpace);
         $randomString = '';
-        for ($i = 0; $i < $length; $i ++) {
+        for ($i = 0; $i < $length; $i++) {
             $randomString = $randomString . $stringSpace[rand(0, $stringLength - 1)];
         }
+
         return $randomString;
     }
 

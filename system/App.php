@@ -1,11 +1,14 @@
 <?php
+
 require_once '../bootstrap/base-path.php';
-require_once PATH_TO_PROJECT.'/app/controllers/CommentsController.php';
-require_once PATH_TO_PROJECT.'/app/controllers/AppController.php';
+require_once PATH_TO_PROJECT . '/app/controllers/CommentsController.php';
+require_once PATH_TO_PROJECT . '/app/controllers/AppController.php';
 
-class App {
+class App
+{
 
-    public function run() {
+    public function run()
+    {
         $url = $_SERVER['REQUEST_URI'];
         [$urlWithoutQuery, $query] = explode('?', $url);
 

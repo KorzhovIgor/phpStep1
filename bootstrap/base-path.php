@@ -1,2 +1,3 @@
 <?php
-define('PATH_TO_PROJECT', dirname(__FILE__).'/..');
+
+define('PATH_TO_PROJECT', dirname(__FILE__) . '/..');

@@ -16,7 +16,7 @@
 </nav>
 <div class="container">
     <form name="commentsForm" method="post" action="/comments/update" id="ddd">
-        <input id="id" name="id" type="text" hidden value="<?=$comment->id ?>"/>
+        <input id="id" name="id" type="text" hidden value="<?= $comment->id ?>"/>
         <div>
             <label for="title">Title:</label>
         </div>

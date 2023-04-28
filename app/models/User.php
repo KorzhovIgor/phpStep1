@@ -1,5 +1,6 @@
 <?php
-require_once PATH_TO_PROJECT.'/database/DBConnection.php';
+
+require_once PATH_TO_PROJECT . '/database/DBConnection.php';
 
 class User
 {

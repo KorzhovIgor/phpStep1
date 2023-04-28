@@ -1,5 +1,6 @@
 <?php
-require_once PATH_TO_PROJECT.'/database/DBConnection.php';
+
+require_once PATH_TO_PROJECT . '/database/DBConnection.php';
 
 class Comment
 {
@@ -76,15 +77,8 @@ class Comment
         return json_encode(ceil(($preparedRequest->fetchColumn()) / 5));
     }
 
-    public function getAll(string $page): string
+    public function getAll(string $startRecord): string
     {
-        $countLinks = json_decode($this->getCountPages());
-        if (($page >= $countLinks) || ($page < 0)) {
-            $startRecord = $page >= $countLinks ? ($countLinks - 1) * 5 : 0;
-        } else {
-            $startRecord = $page * 5;
-        }
-
         $sql = <<<SQL
             SELECT * 
             FROM comments 
