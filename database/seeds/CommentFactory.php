@@ -1,5 +1,5 @@
 <?php
-require_once '/home/user/Projects/Start/app/models/Comment.php';
+require_once PATH_TO_PROJECT.'/app/models/Comment.php';
 
 class CommentFactory
 {

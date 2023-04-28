@@ -1,5 +1,5 @@
 <?php
-require_once '/home/user/Projects/Start/app/models/Comment.php';
+require_once PATH_TO_PROJECT.'/app/models/Comment.php';
 class CommentsController
 {
     private Comment $commentsModel;
@@ -12,16 +12,16 @@ class CommentsController
         $page = substr($query, 5) - 1;
         $allComments = json_decode($this->commentsModel->getAll($page));
         $countPages = json_decode($this->commentsModel->getCountPages());
-        return require_once '/home/user/Projects/Start/app/views/Comments/index.php';
+        return require_once PATH_TO_PROJECT.'/app/views/Comments/index.php';
     }
 
     public function show($id) {
         $comment = json_decode($this->commentsModel->getByID($id));
-        return require_once '/home/user/Projects/Start/app/views/Comments/show.php';
+        return require_once PATH_TO_PROJECT.'/app/views/Comments/show.php';
     }
 
     public function create() {
-        return require_once '/home/user/Projects/Start/app/views/Comments/create.php';
+        return require_once PATH_TO_PROJECT.'/app/views/Comments/create.php';
     }
 
     public function store() {
@@ -33,7 +33,7 @@ class CommentsController
 
     public function edit(string $id) {
         $comment = json_decode($this->commentsModel->getByID($id));
-        return require_once '/home/user/Projects/Start/app/views/Comments/edit.php';
+        return require_once PATH_TO_PROJECT.'/app/views/Comments/edit.php';
     }
 
     public function update() {

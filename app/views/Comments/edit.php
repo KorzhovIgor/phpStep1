@@ -20,15 +20,16 @@
         <div>
             <label for="title">Title:</label>
         </div>
-        <input id="title" name="title" type="text" value="<?=$comment->title ?>"/>
+        <input id="title" name="title" type="text" value="<?=$comment->title ?>" required/>
         <div>
             <label for="content">Content:</label>
         </div>
-        <textarea name="content" id="content" cols="30" rows="10"><?=$comment->content ?></textarea>
+        <textarea name="content" id="content" cols="30" rows="10" required><?=$comment->content ?></textarea>
         <div>
             <button id="submitComment" type="submit">Submit</button>
         </div>
     </form>
 </div>
+<script src="/assets/javascript/form.js"></script>
 </body>
 </html>

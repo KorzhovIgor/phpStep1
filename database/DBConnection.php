@@ -1,4 +1,5 @@
 <?php
+require_once PATH_TO_PROJECT . '/bootstrap/base-config.php';
 class DBConnection
 {
     private static ?DBConnection $db = null;
@@ -6,7 +7,7 @@ class DBConnection
 
     private function __construct() {
         try {
-            $conn = new PDO("mysql:host=localhost;dbname=stratdb", "root", "ivalin60");
+            $conn = new PDO(DATABASE.":host=".HOST.";dbname=".DBNANE, USERNAME, PASSWORD);
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this::$pdo = $conn;

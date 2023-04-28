@@ -24,7 +24,7 @@
                 <th>title</th>
                 <th>content</th>
                 <th>created at</th>
-                <th>delete</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -43,7 +43,7 @@
                         <?= $comment->created_at ?>
                     </td>
                     <td>
-                        <a href="comment/delete/<?= $comment->id?>">delete</a>
+                        <button id="deleteButton" data-id="<?= $comment->id ?>" type="button">Delete</button>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -58,5 +58,6 @@
         </div>
     </div>
 </div>
+<script src="/assets/javascript/confirmDelete.js"></script>
 </body>
 </html>

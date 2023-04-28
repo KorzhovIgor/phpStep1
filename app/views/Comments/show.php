@@ -26,5 +26,6 @@
         <h1>Created: <?= $comment->created_at ?></h1>
     </div>
 </div>
+<script src=""></script>
 </body>
 </html>

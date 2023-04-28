@@ -1,5 +1,5 @@
 <?php
-require_once '/home/user/Projects/Start/database/DBConnection.php';
+require_once PATH_TO_PROJECT.'/database/DBConnection.php';
 
 class Comment
 {

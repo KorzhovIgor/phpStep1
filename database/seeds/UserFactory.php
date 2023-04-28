@@ -1,5 +1,5 @@
 <?php
-require_once '/home/user/Projects/Start/app/models/User.php';
+require_once PATH_TO_PROJECT.'/app/models/User.php';
 
 class UserFactory
 {

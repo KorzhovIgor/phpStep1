@@ -1,6 +1,7 @@
 <?php
-require_once '../app/controllers/CommentsController.php';
-require_once '../app/controllers/AppController.php';
+require_once '../bootstrap/base-path.php';
+require_once PATH_TO_PROJECT.'/app/controllers/CommentsController.php';
+require_once PATH_TO_PROJECT.'/app/controllers/AppController.php';
 
 class App {
 
@@ -43,7 +44,7 @@ class App {
                 $commentsController->update();
                 break;
             case '/comment/delete/':
-                $commentsController->delete($id, $query);
+                $commentsController->delete($id);
                 break;
             default:
                 $appController->error();

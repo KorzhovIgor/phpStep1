@@ -19,15 +19,16 @@
         <div>
             <label for="title">Title:</label>
         </div>
-        <input id="title" name="title" type="text"/>
+        <input id="title" name="title" type="text" required/>
         <div>
             <label for="content">Content:</label>
         </div>
-        <textarea name="content" id="content" cols="30" rows="10"></textarea>
+        <textarea name="content" id="content" cols="30" required rows="10"></textarea>
         <div>
             <button id="submitComment" type="submit">Submit</button>
         </div>
     </form>
 </div>
+<script src="/assets/javascript/form.js"></script>
 </body>
 </html>
