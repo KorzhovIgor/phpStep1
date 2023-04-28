@@ -1,7 +1,7 @@
 <?php
-require_once '/home/user/Projects/Start/app/models/Migration.php';
+require_once PATH_TO_PROJECT.'/app/models/Migration.php';
 
-define('PATH_TO_MIGRATIONS', dirname(__FILE__).'/../database/migrations/');
+define('PATH_TO_MIGRATIONS', PATH_TO_PROJECT.'/database/migrations/');
 
 $connection = DBConnection::getInstance();
 $migrationModel = new Migration();

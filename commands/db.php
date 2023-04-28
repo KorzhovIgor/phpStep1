@@ -1,4 +1,5 @@
 <?php
+require_once '../bootstrap/base-path.php';
 
 $command = $argv[1];
 
