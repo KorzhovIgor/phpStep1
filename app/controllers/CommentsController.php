@@ -16,9 +16,9 @@ class CommentsController
         $page = substr($query, 5) - 1;
         $countLinks = json_decode($this->commentsModel->getCountPages());
         if (($page >= $countLinks) || ($page < 0)) {
-            $startRecord = $page >= $countLinks ? ($countLinks - 1) * 5 : 0;
+            $startRecord = $page >= $countLinks ? ($countLinks - 1) * 10 : 0;
         } else {
-            $startRecord = $page * 5;
+            $startRecord = $page * 10;
         }
         $allComments = json_decode($this->commentsModel->getAll($startRecord));
         $countPages = json_decode($this->commentsModel->getCountPages());

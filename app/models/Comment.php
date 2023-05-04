@@ -74,7 +74,7 @@ class Comment
         $preparedRequest = self::$connection->prepare($sql);
         $preparedRequest->execute();
 
-        return json_encode(ceil(($preparedRequest->fetchColumn()) / 5));
+        return json_encode(ceil(($preparedRequest->fetchColumn()) / 10));
     }
 
     public function getAll(string $startRecord): string
@@ -83,7 +83,7 @@ class Comment
             SELECT * 
             FROM comments 
             ORDER BY id DESC 
-            LIMIT 5 
+            LIMIT 10 
             OFFSET {$startRecord}
         SQL;
 
