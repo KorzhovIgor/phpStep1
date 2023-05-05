@@ -20,14 +20,14 @@ function migrate(Migration $migrationModel, PDO $connection, array $allFiles)
     if (checkExistTable($connection, 'migrations')) {
         $migrations = $migrationModel->getAll();
         foreach ($allFiles as $file) {
-            $a = 0;
+            $isFileMigrated = 0;
             foreach ($migrations as $migration) {
                 $fileName = substr($file, strlen(PATH_TO_MIGRATIONS));
                 if ($migration['name'] === $fileName) {
-                    $a++;
+                    $isFileMigrated++;
                 }
             }
-            if ($a === 0) {
+            if ($isFileMigrated === 0) {
                 $preparedFile = implode('', (file($file)));
                 $connection->exec($preparedFile);
                 $fileName = substr($file, strlen(PATH_TO_MIGRATIONS));
@@ -60,17 +60,12 @@ function createTableForMigrations(PDO $connection)
     $preparedRequest->execute();
 }
 
-function checkExistTable(PDO $connection, string $table): bool
+function checkExistTable(PDO $connection, string $tableName) : bool
 {
-    try {
-        $sql = <<<SQL
-            SELECT 1 
-            FROM $table
-        SQL;
-        $connection->query($sql);
-    } catch (PDOException $e) {
-        return $e->getMessage();
-    }
+    $sql = <<<SQL
+        SHOW TABLES LIKE '{$tableName}'
+    SQL;
+    $q = $connection->query($sql);
 
-    return true;
+    return $q->fetchColumn();
 }

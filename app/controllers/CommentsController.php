@@ -1,6 +1,7 @@
 <?php
 
 require_once PATH_TO_PROJECT . '/app/models/Comment.php';
+require_once PATH_TO_PROJECT . '/app/Request/CommentRequest.php';
 
 class CommentsController
 {
@@ -11,7 +12,7 @@ class CommentsController
         $this->commentsModel = new Comment();
     }
 
-    public function index($query): string
+    public function index($query): bool
     {
         $page = substr($query, 5) - 1;
         $countLinks = json_decode($this->commentsModel->getCountPages());
@@ -26,45 +27,44 @@ class CommentsController
         return require_once PATH_TO_PROJECT . '/app/views/Comments/index.php';
     }
 
-    public function show($id)
+    public function show($id): bool
     {
         $comment = json_decode($this->commentsModel->getByID($id));
 
         return require_once PATH_TO_PROJECT . '/app/views/Comments/show.php';
     }
 
-    public function create()
+    public function create(): bool
     {
         return require_once PATH_TO_PROJECT . '/app/views/Comments/create.php';
     }
 
-    public function store()
+    public function store(): void
     {
-        if ((strlen($_POST['title']) > 0) || (strlen($_POST['content']) > 5)) {
-            $this->commentsModel->store($_POST['title'], $_POST['content']);
+        $validatedData = CommentRequest::validateStore($_POST);
+        if (http_response_code() != 400) {
+            $this->commentsModel->store($validatedData['title'], $validatedData['content']);
+            header('location: /comments');
         }
-        header('location: /comments');
     }
 
-    public function edit(string $id)
+    public function edit(string $id): bool
     {
         $comment = json_decode($this->commentsModel->getByID($id));
 
         return require_once PATH_TO_PROJECT . '/app/views/Comments/edit.php';
     }
 
-    public function update()
+    public function update(): void
     {
-        if ((strlen($_POST['title']) > 0) || (strlen($_POST['content']) > 5)) {
-            $comment = $this->commentsModel->getByID($_POST['id']);
-            if ($comment != null) {
-                $this->commentsModel->update($_POST['id'], $_POST['title'], $_POST['content']);
-            }
+        $validatedData = CommentRequest::validateUpdate($_POST, $this->commentsModel);
+        if (http_response_code() != 400) {
+            $this->commentsModel->update($validatedData['id'], $validatedData['title'], $validatedData['content']);
+            header("location: /comments");
         }
-        header('location: /comments');
     }
 
-    public function delete(string $id)
+    public function delete(string $id): void
     {
         $this->commentsModel->delete($id);
         header("location: /comments");
