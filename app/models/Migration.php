@@ -23,7 +23,7 @@ class Migration
         return $preparedRequest->fetchAll();
     }
 
-    function store(string $name)
+    function store(string $name): void
     {
         $params = [
             'name' => $name,

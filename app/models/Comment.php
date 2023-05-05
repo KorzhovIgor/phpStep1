@@ -11,7 +11,7 @@ class Comment
         $this::$connection = DBConnection::getInstance();
     }
 
-    public function store(string $title, string $content)
+    public function store(string $title, string $content): void
     {
         $params = [
             'title' => $title,
@@ -40,7 +40,7 @@ class Comment
         return json_encode($preparedRequest->fetch());
     }
 
-    public function update(string $id, string $title, string $content)
+    public function update(string $id, string $title, string $content): void
     {
         $sql = <<<SQL
             UPDATE comments 
@@ -52,7 +52,7 @@ class Comment
     }
 
 
-    public function delete(string $id)
+    public function delete(string $id): void
     {
         $dbInstance = self::$connection;
         $sql = <<<SQL

@@ -11,7 +11,7 @@ class User
         $this::$connection = DBConnection::getInstance();
     }
 
-    public function store(string $firstname, string $lastname)
+    public function store(string $firstname, string $lastname): void
     {
         $params = [
             'firstname' => $firstname,

@@ -9,8 +9,8 @@ class App
 
     public function run()
     {
-        $url = $_SERVER['REQUEST_URI'];
-        [$urlWithoutQuery, $query] = explode('?', $url);
+        $urlWithoutQuery = strtok($_SERVER["REQUEST_URI"], '?');
+        $query = $_SERVER['QUERY_STRING'];
 
         switch (true) {
             case strpos($urlWithoutQuery, '/comment/delete/') !== false:
