@@ -26,26 +26,26 @@ class Comment
         $preparedRequest->execute($params);
     }
 
-    public function getByID(string $id): string
+    public function getByID(string $id)
     {
         $sql = <<<SQL
             SELECT * 
             FROM comments 
-            WHERE id = $id
+            WHERE id = ?
         SQL;
 
         $preparedRequest = self::$connection->prepare($sql);
-        $preparedRequest->execute();
+        $preparedRequest->execute([$id]);
 
-        return json_encode($preparedRequest->fetch());
+        return $preparedRequest->fetch(PDO::FETCH_ASSOC);
     }
 
     public function update(string $id, string $title, string $content): void
     {
         $sql = <<<SQL
             UPDATE comments 
-            SET title=?, content=? 
-            WHERE id=?
+            SET title = ?, content = ? 
+            WHERE id = ?
         SQL;
         $preparedRequest = self::$connection->prepare($sql);
         $preparedRequest->execute([$title, $content, $id]);

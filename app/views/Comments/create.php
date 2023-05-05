@@ -23,9 +23,9 @@
         </div>
     </div>
 </nav>
-<div class="container">
-    <div class="card p-5 mt-5">
-        <form name="commentsForm" method="post" action="/comments/store" id="ddd">
+<div class="container justify-content-center" style="width: 30%;">
+    <div class="card p-5 mt-5 container">
+        <form name="commentsForm " method="post" action="/comments/store" id="ddd">
             <div class="mb-3">
                 <label for="title" class="form-label">Title:</label>
                 <input type="text" name="title" class="form-control" id="title" aria-describedby="emailHelp" required>

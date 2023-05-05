@@ -16,6 +16,8 @@ class CommentRequest
     public static function validateUpdate(array $post, Comment $commentsModel)
     {
         $comment = $commentsModel->getByID($post['id']);
+        var_dump($comment);
+        die();
         if ($comment === 'false') {
             header("HTTP/1.1 400 Bad Request");
         }

@@ -25,7 +25,7 @@
 <div class="container">
     <h1>Comments page</h1>
     <div class="card">
-        <table class="table table-hover m">
+        <table class="table table-hover">
             <thead>
             <tr>
                 <th scope="col">id</th>
@@ -44,7 +44,7 @@
                     <td>
                         <?= $comment->title ?>
                     </td>
-                    <td>
+                    <td class ="text-break">
                         <?= $comment->content ?>
                     </td>
                     <td>
