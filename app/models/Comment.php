@@ -31,11 +31,11 @@ class Comment
         $sql = <<<SQL
             SELECT * 
             FROM comments 
-            WHERE id = $id
+            WHERE id = :id
         SQL;
 
         $preparedRequest = self::$connection->prepare($sql);
-        $preparedRequest->execute();
+        $preparedRequest->execute(['id' => $id]);
 
         return json_encode($preparedRequest->fetch());
     }
@@ -44,11 +44,11 @@ class Comment
     {
         $sql = <<<SQL
             UPDATE comments 
-            SET title=?, content=? 
-            WHERE id=?
+            SET title = :title, content = :content
+            WHERE id = :id
         SQL;
         $preparedRequest = self::$connection->prepare($sql);
-        $preparedRequest->execute([$title, $content, $id]);
+        $preparedRequest->execute([ "title" => $title, "content" => $content, "id" => $id]);
     }
 
 
