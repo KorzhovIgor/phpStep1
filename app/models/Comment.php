@@ -37,7 +37,7 @@ class Comment
         $preparedRequest = self::$connection->prepare($sql);
         $preparedRequest->execute([$id]);
 
-        return $preparedRequest->fetch(PDO::FETCH_ASSOC);
+        return json_encode($preparedRequest->fetch());
     }
 
     public function update(string $id, string $title, string $content): void
