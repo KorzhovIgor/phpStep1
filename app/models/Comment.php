@@ -1,16 +1,17 @@
 <?php
-require_once 'DB.php';
 
-class Comments
+require_once PATH_TO_PROJECT . '/database/DBConnection.php';
+
+class Comment
 {
     private static PDO $connection;
 
     public function __construct()
     {
-        $this::$connection = DB::getInstance();
+        $this::$connection = DBConnection::getInstance();
     }
 
-    public function store(string $title, string $content)
+    public function store(string $title, string $content): void
     {
         $params = [
             'title' => $title,
@@ -25,17 +26,42 @@ class Comments
         $preparedRequest->execute($params);
     }
 
-    public function delete(string $query)
+    public function getByID(string $id)
     {
-        $commentId = substr($query, 3);
+        $sql = <<<SQL
+            SELECT * 
+            FROM comments 
+            WHERE id = ?
+        SQL;
+
+        $preparedRequest = self::$connection->prepare($sql);
+        $preparedRequest->execute([$id]);
+
+        return json_encode($preparedRequest->fetch());
+    }
+
+    public function update(string $id, string $title, string $content): void
+    {
+        $sql = <<<SQL
+            UPDATE comments 
+            SET title = ?, content = ? 
+            WHERE id = ?
+        SQL;
+        $preparedRequest = self::$connection->prepare($sql);
+        $preparedRequest->execute([$title, $content, $id]);
+    }
+
+
+    public function delete(string $id): void
+    {
         $dbInstance = self::$connection;
         $sql = <<<SQL
             DELETE 
             FROM comments 
-            WHERE id = :commentId
+            WHERE id = :id
         SQL;
         $preparedRequest = $dbInstance->prepare($sql);
-        $preparedRequest->bindValue(":commentId", $commentId);
+        $preparedRequest->bindValue(":id", $id);
         $preparedRequest->execute();
     }
 
@@ -48,24 +74,16 @@ class Comments
         $preparedRequest = self::$connection->prepare($sql);
         $preparedRequest->execute();
 
-        return json_encode(ceil(($preparedRequest->fetchColumn()) / 5));
+        return json_encode(ceil(($preparedRequest->fetchColumn()) / 10));
     }
 
-    public function getAll(string $query): string
+    public function getAll(string $startRecord): string
     {
-        $countLinks = json_decode($this->getCountPages());
-        $page = substr($query, 5) - 1;
-        if (($page >= $countLinks) || ($page < 0)) {
-            $startRecord = $page >= $countLinks ? ($countLinks - 1) * 5 : 0;
-        } else {
-            $startRecord = $page * 5;
-        }
-
         $sql = <<<SQL
             SELECT * 
             FROM comments 
             ORDER BY id DESC 
-            LIMIT 5 
+            LIMIT 10 
             OFFSET {$startRecord}
         SQL;
 

@@ -8,7 +8,7 @@ if (isset($_POST['title']) && isset($_POST['content'])) {
             'content' => $_POST['content'],
             'created_at' => date("Y-m-d"),
         ];
-        $connection = DB::getInstance();
+        $connection = DBConnection::getInstance();
         $sql = "INSERT INTO comments (title, content, created_at) VALUES (:title, :content, :created_at)";
         $preparedRequest = $connection->prepare($sql);
         $preparedRequest->execute($data);
