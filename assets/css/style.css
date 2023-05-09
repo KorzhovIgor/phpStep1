@@ -1,0 +1,19 @@
+table,
+th,
+td {
+    border: 1px solid;
+}
+
+th,
+td {
+    padding: 3px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.containerForLink {
+    margin: 10px;
+}
