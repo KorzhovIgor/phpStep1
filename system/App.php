@@ -31,6 +31,9 @@ class App
             case '/comments':
                 $commentsController->index($query);
                 break;
+            case '/comments/infiniteScroll':
+                $commentsController->indexInfiniteScroll($query);
+                break;
             case '/comment/':
                 $commentsController->show($id);
                 break;
@@ -48,6 +51,9 @@ class App
                 break;
             case '/comment/delete/':
                 $commentsController->delete($id);
+                break;
+            case '/api/comments/':
+                $commentsController->getComments($query);
                 break;
             default:
                 $appController->error();

@@ -65,7 +65,7 @@ class Comment
         $preparedRequest->execute();
     }
 
-    public function getCountPages(): string
+    public function getCountPages(int $countRecords = 10): string
     {
         $sql = <<<SQL
             SELECT Count(*) 
@@ -74,20 +74,22 @@ class Comment
         $preparedRequest = self::$connection->prepare($sql);
         $preparedRequest->execute();
 
-        return json_encode(ceil(($preparedRequest->fetchColumn()) / 10));
+        return json_encode(ceil(($preparedRequest->fetchColumn()) / $countRecords));
     }
 
-    public function getAll(string $startRecord): string
+    public function getAll(string $startRecord, int $countRecords = 10): string
     {
         $sql = <<<SQL
             SELECT * 
             FROM comments 
             ORDER BY id DESC 
-            LIMIT 10 
-            OFFSET {$startRecord}
+            LIMIT :countRecords
+            OFFSET :startRecord
         SQL;
 
         $preparedRequest = self::$connection->prepare($sql);
+        $preparedRequest->bindValue('countRecords', $countRecords, PDO::PARAM_INT);
+        $preparedRequest->bindValue('startRecord', $startRecord, PDO::PARAM_INT);
         $preparedRequest->execute();
 
         return json_encode($preparedRequest->fetchAll());

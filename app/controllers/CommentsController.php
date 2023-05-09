@@ -27,6 +27,27 @@ class CommentsController
         return require_once PATH_TO_PROJECT . '/app/views/Comments/index.php';
     }
 
+    public function getComments($query)
+    {
+        $page = substr($query, 5) - 1;
+        header("Content-type: application/json; charset=utf-8");
+        echo $this->commentsModel->getAll($page * 20, 20);
+    }
+
+    public function indexInfiniteScroll($query): bool
+    {
+        $page = substr($query, 5) - 1;
+        $countLinks = json_decode($this->commentsModel->getCountPages(20));
+        if (($page >= $countLinks) || ($page < 0)) {
+            $startRecord = $page >= $countLinks ? ($countLinks - 1) * 20 : 0;
+        } else {
+            $startRecord = $page * 20;
+        }
+        $allComments = json_decode($this->commentsModel->getAll($startRecord, 20));
+
+        return require_once PATH_TO_PROJECT . '/app/views/Comments/indexInfinite.php';
+    }
+
     public function show($id): bool
     {
         $comment = json_decode($this->commentsModel->getByID($id));
