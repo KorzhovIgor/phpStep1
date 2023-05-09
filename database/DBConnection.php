@@ -4,29 +4,40 @@ require_once PATH_TO_PROJECT . '/bootstrap/base-config.php';
 
 class DBConnection
 {
-    private static ?DBConnection $db = null;
-    private static ?PDO $pdo = null;
-
+    private static array $instances = [];
     private function __construct()
     {
+    }
+
+    protected function __clone()
+    {
+    }
+
+    public function __wakeup()
+    {
+        throw new Exception("Cannot unserialize a singleton.");
+    }
+
+    private static function createPDOConnection(): ?PDO
+    {
         try {
-            $conn = new PDO(DATABASE . ":host=" . HOST . ";dbname=" . DBNANE, USERNAME, PASSWORD);
-            // set the PDO error mode to exception
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this::$pdo = $conn;
+            $connection = new PDO(DATABASE . ":host=" . HOST . ";dbname=" . DBNANE, USERNAME, PASSWORD);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $connection;
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
+            return null;
         }
     }
 
     public static function getInstance(): ?PDO
     {
-        if (self::$db === null) {
-            self::$db = new self;
-
-            return self::$pdo;
+        $className = self::class;
+        if (!isset(self::$instances[$className])) {
+            self::$instances[$className] = self::createPDOConnection();
         }
 
-        return self::$pdo;
+        return self::$instances[$className];
     }
 }
+
