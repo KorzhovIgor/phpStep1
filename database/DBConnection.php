@@ -5,6 +5,7 @@ require_once PATH_TO_PROJECT . '/bootstrap/base-config.php';
 class DBConnection
 {
     private static array $instances = [];
+
     private function __construct()
     {
     }
@@ -23,9 +24,11 @@ class DBConnection
         try {
             $connection = new PDO(DATABASE . ":host=" . HOST . ";dbname=" . DBNANE, USERNAME, PASSWORD);
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
             return $connection;
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
+
             return null;
         }
     }
@@ -40,4 +43,3 @@ class DBConnection
         return self::$instances[$className];
     }
 }
-
