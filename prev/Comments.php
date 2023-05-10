@@ -7,7 +7,7 @@ class Comments
 
     public function __construct()
     {
-        $this::$connection = DB::getInstance();
+        $this::$connection = DBConnection::getInstance();
     }
 
     public function store(string $title, string $content)

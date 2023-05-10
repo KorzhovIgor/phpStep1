@@ -1,7 +1,7 @@
 <?php
 require_once 'DB.php';
 
-$dbInstance = DB::getInstance();
+$dbInstance = DBConnection::getInstance();
 $stmt = $dbInstance->prepare(
     "SELECT Count(*) FROM comments "
 );
