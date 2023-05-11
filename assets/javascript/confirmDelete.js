@@ -7,12 +7,22 @@ handleClickDeleteButton(deleteButtons);
 export function handleClickDeleteButton(deleteButtons) {
     deleteButtons.forEach(item => {
         item.addEventListener('click', (event) => {
-            if (confirm("Do you want to delete?")) {
-                let idForDelete = event.target.getAttribute('data-id');
-                fetch(`/comment/delete/${idForDelete}?page=`).then(() => {
-                    location.reload()
-                });
-            }
+            eventDelete(event);
         })
     })
+}
+
+export function removeEventForDeleteButtons(deleteButtons) {
+    deleteButtons.forEach(item => {
+        item.removeEventListener('click', eventDelete);
+    })
+}
+
+function eventDelete(event) {
+    if (confirm("Do you want to delete?")) {
+        let idForDelete = event.target.getAttribute('data-id');
+        fetch(`/comment/delete/${idForDelete}?page=`).then(() => {
+            location.reload()
+        });
+    }
 }

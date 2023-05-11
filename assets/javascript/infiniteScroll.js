@@ -1,6 +1,6 @@
 'use strict';
 
-import {handleClickDeleteButton} from './confirmDelete.js';
+import {handleClickDeleteButton, removeEventForDeleteButtons} from './confirmDelete.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     let page = 2;
@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if ((window.innerHeight + window.scrollY) + 1 > document.body.offsetHeight) {
                 requestAndPrintComments(page, tbody).then(() => {
                     let deleteButtons = document.querySelectorAll('#deleteButton');
+                    removeEventForDeleteButtons(deleteButtons);
                     handleClickDeleteButton(deleteButtons);
                 });
                 page++;
@@ -39,7 +40,7 @@ function createHTMLTable(data) {
             <td>
                 ${item['title']}
             </td>
-            <td>
+            <td class="text-break">
                  ${item['content']}
             </td>
             <td>
