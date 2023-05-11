@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=yes">
     <title>MyApp</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-light">
@@ -23,7 +25,7 @@
         </div>
     </div>
 </nav>
-<div class="container justify-content-center" style="width: 30%;">
+<div class="container justify-content-center container-width">
     <div class="card p-5 mt-5 container">
         <form name="commentsForm " method="post" action="/comments/store" id="ddd">
             <div class="mb-3">
