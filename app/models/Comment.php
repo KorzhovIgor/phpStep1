@@ -65,6 +65,19 @@ class Comment
         $preparedRequest->execute();
     }
 
+    public function deleteFewRecords(array $comments): void
+    {
+        $placeholders = str_repeat('?, ', count($comments) - 1) . '?';
+        $dbInstance = self::$connection;
+        $sql = <<<SQL
+            DELETE 
+            FROM comments 
+            WHERE id IN($placeholders)
+        SQL;
+        $preparedRequest = $dbInstance->prepare($sql);
+        $preparedRequest->execute($comments);
+    }
+
     public function getCountPages(int $countRecords = 10): string
     {
         $sql = <<<SQL

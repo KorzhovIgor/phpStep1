@@ -68,7 +68,7 @@ class CommentsController
         } else {
             $this->commentsModel->store($validatedData['title'], $validatedData['content']);
         }
-            header('location: /comments');
+        header('location: /comments');
     }
 
     public function edit(string $id): bool
@@ -93,5 +93,11 @@ class CommentsController
     {
         $this->commentsModel->delete($id);
         header("location: /comments");
+    }
+
+    public function deleteFewComments(): void
+    {
+        $records = json_decode($_POST['request']);
+        $this->commentsModel->deleteFewRecords($records);
     }
 }

@@ -31,6 +31,9 @@ class App
             case '/comments':
                 $commentsController->index($query);
                 break;
+            case '/comments/deleteFewComments':
+                $commentsController->deleteFewComments();
+                break;
             case '/comments/infiniteScroll':
                 $commentsController->indexInfiniteScroll($query);
                 break;
