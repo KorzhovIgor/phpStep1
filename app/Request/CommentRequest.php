@@ -2,22 +2,26 @@
 
 class CommentRequest
 {
-    public static function validateStore(array $post)
+    public static function validateStore(array $post): array
     {
-        if ((strlen($post['title']) > 0) || (strlen($post['content']) > 5)) {
+        if ((strlen($post['title']) > 0) && (strlen($post['content']) > 5)) {
             return [
                 'title' => $post['title'],
                 'content' => $post['content']
             ];
-        }
-        header("HTTP/1.1 400 Bad Request");
+        } else
+            return [
+                'error_message' => "wrong data",
+            ];
     }
 
-    public static function validateUpdate(array $post, Comment $commentsModel): array
+    public static function validateUpdate(array $post, Comment $commentModel): array
     {
-        $comment = $commentsModel->getByID($post['id']);
+        $comment = $commentModel->getByID($post['id']);
         if ($comment === 'false') {
-            header("HTTP/1.1 400 Bad Request");
+            return [
+                'error_message' => "wrong id",
+            ];
         }
         $validatedData = self::validateStore($post);
         $validatedData['id'] = $post['id'];

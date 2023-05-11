@@ -63,10 +63,12 @@ class CommentsController
     public function store(): void
     {
         $validatedData = CommentRequest::validateStore($_POST);
-        if (http_response_code() != 400) {
+        if (isset($validatedData['error_message'])) {
+            header("HTTP/1.1 400 Bad Request");
+        } else {
             $this->commentsModel->store($validatedData['title'], $validatedData['content']);
-            header('location: /comments');
         }
+            header('location: /comments');
     }
 
     public function edit(string $id): bool
@@ -79,10 +81,12 @@ class CommentsController
     public function update(): void
     {
         $validatedData = CommentRequest::validateUpdate($_POST, $this->commentsModel);
-        if (http_response_code() != 400) {
+        if (isset($validatedData['error_message'])) {
+            header("HTTP/1.1 400 Bad Request");
+        } else {
             $this->commentsModel->update($validatedData['id'], $validatedData['title'], $validatedData['content']);
-            header("location: /comments");
         }
+        header("location: /comments");
     }
 
     public function delete(string $id): void
