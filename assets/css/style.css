@@ -1,19 +1,9 @@
-table,
-th,
-td {
-    border: 1px solid;
+.container-width {
+    width: 30%;
 }
 
-th,
-td {
-    padding: 3px;
-}
-
-.container {
-    display: flex;
-    justify-content: center;
-}
-
-.containerForLink {
-    margin: 10px;
+@media (max-width: 575.98px) {
+    .container-width {
+        width: 100%;
+    }
 }
