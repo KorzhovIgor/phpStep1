@@ -1,6 +1,6 @@
 <?php
 
-define('PATH_TO_FACTORIES', PATH_TO_PROJECT . '/database/seeds/');
+define('PATH_TO_FACTORIES', PATH_TO_PROJECT . '/Database/seeds/');
 
 if (isset($argv[2])) {
     $seedFile = array(PATH_TO_FACTORIES . $argv[2]);

@@ -1,6 +1,6 @@
 <?php
 
-require_once PATH_TO_PROJECT . '/app/models/Comment.php';
+use App\Models\Comment;
 
 class CommentFactory
 {

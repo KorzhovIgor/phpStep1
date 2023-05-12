@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Request;
+
+use App\Models\Comment;
+
 class CommentRequest
 {
     public static function validateStore(array $post): array
@@ -9,10 +13,11 @@ class CommentRequest
                 'title' => $post['title'],
                 'content' => $post['content']
             ];
-        } else
+        } else {
             return [
                 'error_message' => "wrong data",
             ];
+        }
     }
 
     public static function validateUpdate(array $post, Comment $commentModel): array
@@ -25,6 +30,7 @@ class CommentRequest
         }
         $validatedData = self::validateStore($post);
         $validatedData['id'] = $post['id'];
+
         return $validatedData;
     }
 }

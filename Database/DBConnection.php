@@ -1,6 +1,10 @@
 <?php
 
-require_once PATH_TO_PROJECT . '/bootstrap/base-config.php';
+namespace Database;
+
+use Exception;
+use PDO;
+use PDOException;
 
 class DBConnection
 {

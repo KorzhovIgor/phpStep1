@@ -1,6 +1,6 @@
 <?php
 
-require_once '../bootstrap/base-path.php';
+require '../vendor/autoload.php';
 
 $command = $argv[1];
 

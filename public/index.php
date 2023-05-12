@@ -1,6 +1,6 @@
 <?php
 
-require_once '../system/App.php';
+require '../vendor/autoload.php';
 
 $app = new App();
 $app->run();

@@ -1,6 +1,9 @@
 <?php
 
-require_once PATH_TO_PROJECT . '/database/DBConnection.php';
+namespace App\Models;
+
+use PDO;
+use Database\DBConnection;
 
 class Migration
 {

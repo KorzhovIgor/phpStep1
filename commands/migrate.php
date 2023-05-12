@@ -1,8 +1,9 @@
 <?php
 
-require_once PATH_TO_PROJECT . '/app/models/Migration.php';
+use App\Models\Migration;
+use Database\DBConnection;
 
-define('PATH_TO_MIGRATIONS', PATH_TO_PROJECT . '/database/migrations/');
+define('PATH_TO_MIGRATIONS', PATH_TO_PROJECT . '/Database/migrations/');
 
 $connection = DBConnection::getInstance();
 $migrationModel = new Migration();
@@ -60,7 +61,7 @@ function createTableForMigrations(PDO $connection)
     $preparedRequest->execute();
 }
 
-function checkExistTable(PDO $connection, string $tableName) : bool
+function checkExistTable(PDO $connection, string $tableName): bool
 {
     $sql = <<<SQL
         SHOW TABLES LIKE '{$tableName}'

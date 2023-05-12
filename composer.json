@@ -1,0 +1,11 @@
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "app"
+        },
+        "files": ["Database/DBConnection.php", "bootstrap/base-config.php", "bootstrap/base-path.php", "system/App.php"]
+    },
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}

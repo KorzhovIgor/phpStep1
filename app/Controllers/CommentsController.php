@@ -1,7 +1,9 @@
 <?php
 
-require_once PATH_TO_PROJECT . '/app/models/Comment.php';
-require_once PATH_TO_PROJECT . '/app/Request/CommentRequest.php';
+namespace App\Controllers;
+
+use App\Models\Comment;
+use App\Request\CommentRequest;
 
 class CommentsController
 {

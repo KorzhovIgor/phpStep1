@@ -1,8 +1,11 @@
 <?php
 
-require_once '../bootstrap/base-path.php';
-require_once PATH_TO_PROJECT . '/app/controllers/CommentsController.php';
-require_once PATH_TO_PROJECT . '/app/controllers/AppController.php';
+//require_once '../bootstrap/base-path.php';
+//require_once PATH_TO_PROJECT . '/app/Controllers/CommentsController.php';
+//require_once PATH_TO_PROJECT . '/app/Controllers/AppController.php';
+
+use App\Controllers\CommentsController;
+use App\Controllers\AppController;
 
 class App
 {
