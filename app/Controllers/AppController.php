@@ -2,16 +2,21 @@
 
 namespace App\Controllers;
 
+
+use App\Traits\Render;
+
 class AppController
 {
 
-    public function index(): bool
+    use Render;
+
+    public function index(): void
     {
-        return require_once PATH_TO_PROJECT . '/app/views/index.html';
+        $this->render('index.html.twig', []);
     }
 
-    public function error(): bool
+    public function error(): void
     {
-        return require_once PATH_TO_PROJECT . '/app/views/error.html';
+        $this->render('error.html.twig', []);
     }
 }

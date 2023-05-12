@@ -4,9 +4,12 @@ namespace App\Controllers;
 
 use App\Models\Comment;
 use App\Request\CommentRequest;
+use App\Traits\Render;
 
 class CommentsController
 {
+
+    use Render;
     private Comment $commentsModel;
 
     public function __construct()
@@ -14,7 +17,7 @@ class CommentsController
         $this->commentsModel = new Comment();
     }
 
-    public function index($query): bool
+    public function index($query): void
     {
         $page = substr($query, 5) - 1;
         $countLinks = json_decode($this->commentsModel->getCountPages());
@@ -26,7 +29,7 @@ class CommentsController
         $allComments = json_decode($this->commentsModel->getAll($startRecord));
         $countPages = json_decode($this->commentsModel->getCountPages());
 
-        return require_once PATH_TO_PROJECT . '/app/views/Comments/index.php';
+        $this->render('comments/index.html.twig', ['comments' => $allComments, 'countLinks' => $countPages]);
     }
 
     public function getComments($query)
