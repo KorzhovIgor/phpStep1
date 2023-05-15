@@ -32,14 +32,14 @@ class CommentsController
         $this->render('comments/index.html.twig', ['comments' => $allComments, 'countLinks' => $countPages]);
     }
 
-    public function getComments($query)
+    public function getComments(string $query)
     {
         $page = substr($query, 5) - 1;
         header("Content-type: application/json; charset=utf-8");
         echo $this->commentsModel->getAll($page * 20, 20);
     }
 
-    public function indexInfiniteScroll($query): bool
+    public function indexInfiniteScroll(string $query): void
     {
         $page = substr($query, 5) - 1;
         $countLinks = json_decode($this->commentsModel->getCountPages(20));
@@ -50,19 +50,18 @@ class CommentsController
         }
         $allComments = json_decode($this->commentsModel->getAll($startRecord, 20));
 
-        return require_once PATH_TO_PROJECT . '/app/views/Comments/indexInfinite.php';
+        $this->render('comments/indexInfinite.html.twig', ['comments' => $allComments]);
     }
 
-    public function show($id): bool
+    public function show(int $id): void
     {
         $comment = json_decode($this->commentsModel->getByID($id));
-
-        return require_once PATH_TO_PROJECT . '/app/views/Comments/show.php';
+        $this->render('comments/show.html.twig', ['comment' => $comment, 'path' => 'show']);
     }
 
-    public function create(): bool
+    public function create(): void
     {
-        return require_once PATH_TO_PROJECT . '/app/views/Comments/create.php';
+        $this->render('comments/create.html.twig', []);
     }
 
     public function store(): void
@@ -76,11 +75,12 @@ class CommentsController
         header('location: /comments');
     }
 
-    public function edit(string $id): bool
+    public function edit(string $id): void
     {
+        global $urlWithoutQuery;
         $comment = json_decode($this->commentsModel->getByID($id));
-
-        return require_once PATH_TO_PROJECT . '/app/views/Comments/edit.php';
+        $this->render('comments/edit.html.twig', ['comment' => $comment, 'url' => $urlWithoutQuery,
+            'path' => 'edit']);
     }
 
     public function update(): void

@@ -7,9 +7,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link" aria-current="page" href="/">Home</a>
+                <a class="nav-link"
+                   aria-current="page" href="/">Home</a>
                 <a class="nav-link" aria-current="page" href="/comments">Show comments</a>
                 <a class="nav-link" aria-current="page" href="/comments/create">Create comment</a>
+                {% if ((path == "show") or (path == "edit")) %}
+                    <a class="nav-link" aria-current="page" href="/comments/edit/{{ comment.id }}">Change comment</a>
+                {% endif %}
             </div>
         </div>
     </div>

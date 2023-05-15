@@ -27,10 +27,10 @@
                         <p class="card-text">{{ comments[i].content }}</p>
                         <a class="btn btn-primary" href="/comment/{{ comments[i].id }}">Open</a>
                         <button id="deleteButton" class="btn btn-primary" data-id={{ comments[i].id }}
-                                type="button">Delete
+                        type="button">Delete
                         </button>
                         <input type="checkbox" class="btn-check delete-checkbox" id={{ comments[i].id }}
-                               autocomplete="off">
+                        autocomplete="off">
                         <label class="btn btn-outline-danger" for={{ comments[i].id }}>set for delete</label>
                     </div>
                 </div>
@@ -41,6 +41,7 @@
                 {% set counter = 0 %}
             {% endif %}
         {% endfor %}
+    </div>
 
     {% include 'components/paginator.html.twig' %}
 
