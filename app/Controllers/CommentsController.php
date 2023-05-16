@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\API\GorestApi;
 use App\Models\Comment;
 use App\Request\CommentRequest;
 use App\Traits\Render;
@@ -20,14 +21,20 @@ class CommentsController
     public function index($query): void
     {
         $page = substr($query, 5) - 1;
-        $countLinks = json_decode($this->commentsModel->getCountPages());
-        if (($page >= $countLinks) || ($page < 0)) {
-            $startRecord = $page >= $countLinks ? ($countLinks - 1) * 10 : 0;
-        } else {
-            $startRecord = $page * 10;
+        if ($_COOKIE['database'] == 'Default database') {
+            $countLinks = json_decode($this->commentsModel->getCountPages());
+            if (($page >= $countLinks) || ($page < 0)) {
+                $startRecord = $page >= $countLinks ? ($countLinks - 1) * 10 : 0;
+            } else {
+                $startRecord = $page * 10;
+            }
+            $allComments = json_decode($this->commentsModel->getAll($startRecord));
+            $countPages = json_decode($this->commentsModel->getCountPages());
+        } else if ($_COOKIE['database'] == 'gorest REST API') {
+            $allComments = json_decode(GorestApi::getComments($page, 10));
+            var_dump($allComments);
+            die();
         }
-        $allComments = json_decode($this->commentsModel->getAll($startRecord));
-        $countPages = json_decode($this->commentsModel->getCountPages());
 
         $this->render('comments/index.html.twig', ['comments' => $allComments, 'countLinks' => $countPages]);
     }

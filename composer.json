@@ -6,6 +6,7 @@
         "files": ["Database/DBConnection.php", "bootstrap/base-config.php", "bootstrap/base-path.php", "system/App.php"]
     },
     "require": {
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+      "ext-curl": "*"
     }
 }
