@@ -5,3 +5,4 @@ define('HOST', 'localhost');
 define('DBNANE', 'stratdb');
 define('USERNAME', 'root');
 define('PASSWORD', 'ivalin60');
+define('URL', 'http://start.test');
