@@ -2,16 +2,17 @@
 
 namespace App\Controllers;
 
-use App\API\GorestApi;
-use App\API\GorestApiAdapter;
 use App\Models\Comment;
 use App\Request\CommentRequest;
+use App\Services\GorestApi;
+use App\Services\GorestApiAdapter;
 use App\Traits\Render;
 
 class CommentsController
 {
 
     use Render;
+
     private Comment $commentsModel;
 
     public function __construct()
@@ -32,42 +33,39 @@ class CommentsController
             }
             $allComments = json_decode($this->commentsModel->getAll($startRecord));
             $countPages = json_decode($this->commentsModel->getCountPages());
-            $nextPage = $page < $countPages ? $page + 1 : null;
-            $nextPageLink = $nextPage !== null ? URL . '/comments?page=' . $nextPage : null;
-            $prevPage = $page > 1 ? $page - 1 : null;
-            $prevPageLink = $prevPage!== null ? URL . '/comments?page=' . $prevPage : null;
         } else if ($_COOKIE['database'] == 'gorest REST API') {
             $dataFromApi = json_decode(GorestApi::getComments($page, 10));
             $allComments = GorestApiAdapter::CommentsGorestToMyComments($dataFromApi->data);
             $countPages = $dataFromApi->meta->pagination->pages;
-            $nextPage = $page < $countPages ? $page + 1 : null;
-            $nextPageLink = $nextPage !== null ? URL . '/comments?page=' . $nextPage : null;
-            $prevPage = $page > 1 ? $page - 1 : null;
-            $prevPageLink = $prevPage!== null ? URL . '/comments?page=' . $prevPage : null;
         }
-
+        $nextPage = $page < $countPages ? $page + 1 : null;
+        $nextPageLink = $nextPage !== null ? URL . '/comments?page=' . $nextPage : null;
+        $prevPage = $page > 1 ? $page - 1 : null;
+        $prevPageLink = $prevPage !== null ? URL . '/comments?page=' . $prevPage : null;
         $this->render('comments/index.html.twig', ['comments' => $allComments,
             'nextPage' => $nextPageLink, 'prevPage' => $prevPageLink]);
     }
 
     public function getComments(string $query)
     {
-        $page = substr($query, 5) - 1;
-        header("Content-type: application/json; charset=utf-8");
-        echo $this->commentsModel->getAll($page * 20, 20);
+        $page = intval(substr($query, 5)) - 1;
+        if ($_COOKIE['database'] == 'Default database') {
+            header("Content-type: application/json; charset=utf-8");
+            echo $this->commentsModel->getAll($page * 20, 20);
+        } else if ($_COOKIE['database'] == 'gorest REST API') {
+            $dataFromApi = json_decode(GorestApi::getComments($page, 20));
+            echo json_encode(GorestApiAdapter::CommentsGorestToMyComments($dataFromApi->data));
+        }
     }
 
-    public function indexInfiniteScroll(string $query): void
+    public function indexInfiniteScroll(): void
     {
-        $page = substr($query, 5) - 1;
-        $countLinks = json_decode($this->commentsModel->getCountPages(20));
-        if (($page >= $countLinks) || ($page < 0)) {
-            $startRecord = $page >= $countLinks ? ($countLinks - 1) * 20 : 0;
-        } else {
-            $startRecord = $page * 20;
+        if ($_COOKIE['database'] == 'Default database') {
+            $allComments = json_decode($this->commentsModel->getAll(0, 20));
+        } else if ($_COOKIE['database'] == 'gorest REST API') {
+            $dataFromApi = json_decode(GorestApi::getComments(1, 20));
+            $allComments = GorestApiAdapter::CommentsGorestToMyComments($dataFromApi->data);
         }
-        $allComments = json_decode($this->commentsModel->getAll($startRecord, 20));
-
         $this->render('comments/indexInfinite.html.twig', ['comments' => $allComments]);
     }
 
@@ -78,12 +76,15 @@ class CommentsController
         } else if ($_COOKIE['database'] == 'gorest REST API') {
             $comment = GorestApiAdapter::CommentGorestToMyComment(json_decode(GorestApi::getComment($id)));
         }
-        $this->render('comments/show.html.twig', ['comment' => $comment, 'path' => 'show']);
+        $this->render('comments/show.html.twig', ['comment' => $comment, 'path' => 'show', 'db' => $_COOKIE['database']]);
     }
 
     public function create(): void
     {
-        $this->render('comments/create.html.twig', []);
+        if ($_COOKIE['database'] == 'gorest REST API') {
+            $postsForComments = json_decode(GorestApi::getPosts(1, 6));
+        }
+        $this->render('comments/create.html.twig', ['db' => $_COOKIE['database'], 'posts' => $postsForComments->data]);
     }
 
     public function store(): void
@@ -95,7 +96,7 @@ class CommentsController
             if ($_COOKIE['database'] == 'Default database') {
                 $this->commentsModel->store($validatedData['title'], $validatedData['content']);
             } else if ($_COOKIE['database'] == 'gorest REST API') {
-                GorestApi::storeComment($validatedData['title'], $validatedData['content']);
+                GorestApi::storeComment();
             }
         }
         header('location: /comments');
@@ -103,17 +104,26 @@ class CommentsController
 
     public function edit(string $id): void
     {
-        $comment = json_decode($this->commentsModel->getByID($id));
-        $this->render('comments/edit.html.twig', ['comment' => $comment, 'path' => 'edit']);
+        if ($_COOKIE['database'] == 'Default database') {
+            $comment = json_decode($this->commentsModel->getByID($id));
+        } else if ($_COOKIE['database'] == 'gorest REST API') {
+            $comment = GorestApiAdapter::CommentGorestToMyComment(json_decode(GorestApi::getComment($id)));
+        }
+        $this->render('comments/edit.html.twig', ['comment' => $comment,
+            'path' => 'edit', 'db' => $_COOKIE['database']]);
     }
 
     public function update(): void
     {
         $validatedData = CommentRequest::validateUpdate($_POST, $this->commentsModel);
-        if (isset($validatedData['error_message'])) {
+        if (isset($validatedData['error_message']) && ($_COOKIE['database'] == 'Default database')) {
             header("HTTP/1.1 400 Bad Request");
         } else {
-            $this->commentsModel->update($validatedData['id'], $validatedData['title'], $validatedData['content']);
+            if ($_COOKIE['database'] == 'Default database') {
+                $this->commentsModel->update($validatedData['id'], $validatedData['title'], $validatedData['content']);
+            } else if ($_COOKIE['database'] == 'gorest REST API') {
+                GorestApi::putComment();
+            }
         }
         header("location: /comments");
     }
@@ -134,7 +144,7 @@ class CommentsController
         if ($_COOKIE['database'] == 'Default database') {
             $this->commentsModel->deleteFewRecords($records);
         } else if ($_COOKIE['database'] == 'gorest REST API') {
-            GorestApi::deleteFewComment($records);
+            GorestApi::deleteFewComments($records);
         }
     }
 }

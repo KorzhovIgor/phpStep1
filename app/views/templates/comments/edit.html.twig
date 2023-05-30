@@ -11,6 +11,18 @@
     <div class="container justify-content-center container-width">
         <div class="card p-5 mt-5 container">
             <form name="commentsForm " method="post" action="/comments/update" id="ddd">
+                {% if db in "gorest REST API" %}
+                <div class="mb-3">
+                    <label for="select" class="form-label">Post:</label>
+                    <select id="select" class="form-select mb-3" name="post_id">
+                            <option value={{ comment.post_id }}>{{ comment.post_id }}</option>
+                    </select>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" name="email" class="form-control" id="email" value="{{ comment.email }}" aria-describedby="emailHelp" required>
+                    </div>
+                </div>
+                {% endif %}
                 <input id="id" name="id" type="text" hidden value="{{ comment.id }}"/>
                 <div class="mb-3">
                     <label for="title" class="form-label">Title:</label>

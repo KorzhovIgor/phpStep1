@@ -11,10 +11,16 @@
     <div class="container">
         <div class="card m-5 p-5 text-center">
             <h1>Show page</h1>
+            {% if db in "gorest REST API" %}
+                <h1>Post id: {{ comment.post_id }}</h1>
+                <h1>Email: {{ comment.email }}</h1>
+            {% endif %}
             <h1>ID: {{ comment.id }}</h1>
             <h1>Title: {{ comment.title }}</h1>
             <h1>Content: {{ comment.content }}</h1>
-            <h1>Created: {{ comment.created_at }}</h1>
+            {% if db in "Default database" %}
+                <h1>Created: {{ comment.created_at }}</h1>
+            {% endif %}
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

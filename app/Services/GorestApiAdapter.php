@@ -1,6 +1,6 @@
 <?php
 
-namespace App\API;
+namespace App\Services;
 
 use stdClass;
 
@@ -16,7 +16,6 @@ class GorestApiAdapter
             $comment->content = $gorestComment->body;
             $comments[$key] = $comment;
         }
-
         return $comments;
     }
 
@@ -26,6 +25,9 @@ class GorestApiAdapter
         $comment->id = $gorestComment->data->id;
         $comment->title = $gorestComment->data->name;
         $comment->content = $gorestComment->data->body;
+        $comment->email = $gorestComment->data->email;
+        $comment->post_id = $gorestComment->data->post_id;
+
         return $comment;
     }
 }

@@ -12,7 +12,11 @@ class AppController
 
     public function index(): void
     {
-        $this->render('index.html.twig', []);
+        if (isset($_COOKIE['database'])) {
+            $this->render('index.html.twig', ['db' => $_COOKIE['database']]);
+        } else {
+            $this->render('index.html.twig', ['db' => 'Default database']);
+        }
     }
 
     public function error(): void
