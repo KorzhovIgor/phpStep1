@@ -96,7 +96,7 @@ class CommentsController
             if ($_COOKIE['database'] == 'Default database') {
                 $this->commentsModel->store($validatedData['title'], $validatedData['content']);
             } else if ($_COOKIE['database'] == 'gorest REST API') {
-                GorestApi::storeComment();
+                GorestApi::storeComment(AUTH_GOREST_API);
             }
         }
         header('location: /comments');
@@ -115,14 +115,14 @@ class CommentsController
 
     public function update(): void
     {
-        $validatedData = CommentRequest::validateUpdate($_POST, $this->commentsModel);
         if (isset($validatedData['error_message']) && ($_COOKIE['database'] == 'Default database')) {
             header("HTTP/1.1 400 Bad Request");
         } else {
             if ($_COOKIE['database'] == 'Default database') {
+                $validatedData = CommentRequest::validateUpdate($_POST, $this->commentsModel);
                 $this->commentsModel->update($validatedData['id'], $validatedData['title'], $validatedData['content']);
             } else if ($_COOKIE['database'] == 'gorest REST API') {
-                GorestApi::putComment();
+                GorestApi::putComment(AUTH_GOREST_API, $_POST['id'], $_POST);
             }
         }
         header("location: /comments");
@@ -133,7 +133,7 @@ class CommentsController
         if ($_COOKIE['database'] == 'Default database') {
             $this->commentsModel->delete($id);
         } else if ($_COOKIE['database'] == 'gorest REST API') {
-            GorestApi::deleteComment($id);
+            GorestApi::deleteComment($id, AUTH_GOREST_API);
         }
         header("location: /comments");
     }
