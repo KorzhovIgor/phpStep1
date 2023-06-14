@@ -1,0 +1,390 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger trainee project",
+    "description": "This is a sample specification for trainee project",
+    "contact": {
+      "email": "thms@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "http://start.test/api/gorestApi"
+    }
+  ],
+  "tags": [
+    {
+      "name": "comment",
+      "description": "All actions with comments"
+    }
+  ],
+  "paths": {
+    "/comments": {
+      "get": {
+        "tags": [
+          "comment"
+        ],
+        "summary": "Get comments from api",
+        "description": "This request need for getting information about comments",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "number of page",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "default": "available"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "quantity comments in response",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "default": "available"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "example": {
+                        "pagination": {
+                          "total": 2476,
+                          "pages": 248,
+                          "page": 4,
+                          "limit": 10,
+                          "links": {
+                            "previous": "https://gorest.co.in/public/v1/comments?page=3",
+                            "current": "https://gorest.co.in/public/v1/comments?page=4",
+                            "next": "https://gorest.co.in/public/v1/comments?page=5"
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Comment"
+                      }
+                    }
+                  },
+                  "items": {
+                    "$ref": "#/components/schemas/Comment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comment/{commentId}": {
+      "get": {
+        "tags": [
+          "comment"
+        ],
+        "summary": "Get comment from api",
+        "description": "This request need for getting information about comment",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "example": null
+                    },
+                    "data": {
+                      "example": {
+                        "id": "12345",
+                        "post_id": 10,
+                        "title": "comment1",
+                        "email": "thms@gmail.com",
+                        "content": "content for comment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/store": {
+      "post": {
+        "tags": [
+          "comment"
+        ],
+        "summary": "Store comment to api",
+        "description": "This request need for storing information about comment",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "authorization key",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": "Bearer 3086eba9e5bfee101bf3da3994bac37fbdb9480c674e6790938678058c8ffce5"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Store new comment to api",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "example": null
+                    },
+                    "data": {
+                      "example": {
+                        "id": "12345",
+                        "post_id": 10,
+                        "title": "comment1",
+                        "email": "thms@gmail.com",
+                        "content": "content for comment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/put/{commentId}": {
+      "put": {
+        "tags": [
+          "comment"
+        ],
+        "summary": "Put comment in api",
+        "description": "This request need for updating information about comment",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "authorization key",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": "Bearer 3086eba9e5bfee101bf3da3994bac37fbdb9480c674e6790938678058c8ffce5"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Put comment in api",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Comment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "example": null
+                    },
+                    "data": {
+                      "example": {
+                        "id": "12345",
+                        "post_id": 10,
+                        "title": "comment1",
+                        "email": "thms@gmail.com",
+                        "content": "content for comment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/patch/{commentId}": {
+      "patch": {
+        "tags": [
+          "comment"
+        ],
+        "summary": "Patch comment in api",
+        "description": "This request need for updating information about comment",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "authorization key",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": "Bearer 3086eba9e5bfee101bf3da3994bac37fbdb9480c674e6790938678058c8ffce5"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Put comment in api",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "post_id": 10,
+                  "title": "comment1",
+                  "email": "thms@gmail.com",
+                  "content": "content for comment"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "example": null
+                    },
+                    "data": {
+                      "example": {
+                        "id": "12345",
+                        "post_id": 10,
+                        "title": "comment1",
+                        "email": "thms@gmail.com",
+                        "content": "content for comment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comment/delete/{commentId}": {
+      "delete": {
+        "tags": [
+          "comment"
+        ],
+        "summary": "Delete comment in api",
+        "description": "This request need for deleting comment",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "authorization key",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "default": "Bearer 3086eba9e5bfee101bf3da3994bac37fbdb9480c674e6790938678058c8ffce5"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Comment": {
+        "required": [
+          "post_id",
+          "title",
+          "email",
+          "content"
+        ],
+        "type": "object",
+        "properties": {
+          "post_id": {
+            "type": "integer",
+            "example": 10
+          },
+          "title": {
+            "type": "string",
+            "example": "comment1"
+          },
+          "email": {
+            "type": "string",
+            "example": "thms@gmail.com"
+          },
+          "content": {
+            "type": "string",
+            "example": "content for comment"
+          }
+        },
+        "xml": {
+          "name": "comment"
+        }
+      }
+    },
+    "requestBodies": {
+      "Comment": {
+        "description": "Comment object that needs to be added to the store",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Comment"
+            }
+          }
+        }
+      }
+    }
+  }
+}

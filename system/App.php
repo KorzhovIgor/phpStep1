@@ -9,6 +9,7 @@ class App
 
     public function run()
     {
+
         $urlWithoutQuery = strtok($_SERVER["REQUEST_URI"], '?');
         $query = $_SERVER['QUERY_STRING'];
 
@@ -79,6 +80,9 @@ class App
                 break;
             case '/api/gorestApi/comments/patch/':
                 $gorestApiController->patchComment($id);
+                break;
+            case '/api/swaggerDock':
+                require PATH_TO_PROJECT . '/public/web/index.html';
                 break;
             default:
                 $appController->error();

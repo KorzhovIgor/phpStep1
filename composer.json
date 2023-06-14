@@ -8,6 +8,7 @@
     },
     "require": {
         "twig/twig": "^3.0",
-      "ext-curl": "*"
+      "ext-curl": "*",
+        "zircote/swagger-php": "^4.7"
     }
 }
