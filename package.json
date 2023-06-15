@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.3.0",
+    "jquery": "^3.7.0",
+    "popper.js": "^1.16.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "css-loader": "^6.8.1",
+    "exports-loader": "^4.0.0",
+    "node-sass": "^9.0.0",
+    "postcss-loader": "^7.3.3",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.87.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
