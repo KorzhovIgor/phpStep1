@@ -1,5 +1,3 @@
 .idea
 vendor
 node_modules
-public/assets/bundle.js
-public/assets/bundle.js.LICENSE.txt
