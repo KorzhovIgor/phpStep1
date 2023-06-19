@@ -55,7 +55,6 @@ class CommentsModelTest extends TestCase
         $preparedRequest->execute(['TheBestTitle', 'The best content']);
         $id = $preparedRequest->fetch()['id'];
         $this->assertEquals(null, $id);
-        ob_flush();
         $db->rollBack();
     }
 }
