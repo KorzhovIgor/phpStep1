@@ -4,7 +4,7 @@ namespace App\Services;
 
 class GorestApi
 {
-    public static function getComments(int $page, string $perPage): string
+    public function getComments(int $page, string $perPage): string
     {
         $curl = curl_init();
         $options = [
@@ -18,7 +18,7 @@ class GorestApi
         return $comments;
     }
 
-    public static function getPosts(int $page, string $perPage): string
+    public function getPosts(int $page, string $perPage): string
     {
         $curl = curl_init();
         $options = [
@@ -32,7 +32,7 @@ class GorestApi
         return $posts;
     }
 
-    public static function getComment(int $id): string
+    public function getComment(int $id): string
     {
         $curl = curl_init();
         $options = [
@@ -46,7 +46,7 @@ class GorestApi
         return $comment;
     }
 
-    public static function storeComment(string $auth): void
+    public function storeComment(string $auth): void
     {
         $curl = curl_init();
         $options = [
@@ -68,7 +68,7 @@ class GorestApi
         echo $comment;
     }
 
-    public static function putComment(string $auth, string $id, ?array $params = null): void
+    public function putComment(string $auth, string $id, ?array $params = null): void
     {
         $curl = curl_init();
         $options = [
@@ -99,7 +99,7 @@ class GorestApi
         echo $result;
     }
 
-    public static function patchComment(string $auth, string $id): void
+    public function patchComment(string $auth, string $id): void
     {
         $curl = curl_init();
         $options = [
@@ -121,7 +121,7 @@ class GorestApi
         echo $result;
     }
 
-    public static function deleteComment(string $id, string $auth): void
+    public function deleteComment(string $id, string $auth): void
     {
         $curl = curl_init();
         $options = [
@@ -139,7 +139,7 @@ class GorestApi
         echo $deletedComment;
     }
 
-    public static function deleteFewComments(array $commentsId): void
+    public function deleteFewComments(array $commentsId): void
     {
         $curl = curl_init();
         $options = [

@@ -3,6 +3,7 @@
 use App\Controllers\CommentsController;
 use App\Controllers\AppController;
 use App\Controllers\GorestApiController;
+use App\Services\GorestApi;
 
 class App
 {
@@ -27,7 +28,7 @@ class App
 
         $commentsController = new CommentsController();
         $appController = new AppController();
-        $gorestApiController = new GorestApiController();
+        $gorestApiController = new GorestApiController(new GorestApi());
 
         switch ($urlWithoutQuery) {
             case '/':

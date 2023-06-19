@@ -8,7 +8,7 @@
     {% include 'components/navbar.html.twig' %}
     <div class="container mt-5">
         <select class="form-select" aria-label="Default select example" id="db-type">
-            <option {{ (db in 'Default database') ? 'selected' : '' }} value="Default database">Default database</option>
+            <option {{ (db in 'Default database') or (db is empty)? 'selected' : '' }} value="Default database">Default database</option>
             <option {{ (db in 'gorest REST API') ? 'selected' : ''}} value="gorest REST API">gorest REST API</option>
         </select>
     </div>

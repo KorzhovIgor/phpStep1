@@ -54,7 +54,6 @@ class Comment
         $preparedRequest->execute([$title, $content, $id]);
     }
 
-
     public function delete(string $id): void
     {
         $dbInstance = self::$connection;

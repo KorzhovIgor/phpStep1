@@ -6,6 +6,17 @@ use App\Services\GorestApi;
 
 class GorestApiController
 {
+    private GorestApi $gorestApi;
+
+    /**
+     * @param $gorestApi
+     */
+    public function __construct($gorestApi)
+    {
+        $this->gorestApi = $gorestApi;
+    }
+
+
     public function getComments($query)
     {
         $queryParams = explode('&', $query);
@@ -19,13 +30,13 @@ class GorestApiController
             }
         }
         header("Content-type: application/json; charset=utf-8");
-        echo GorestApi::getComments($page, $per_page);
+        echo $this->gorestApi->getComments($page, $per_page);
     }
 
     public function getComment(string $id)
     {
         header("Content-type: application/json; charset=utf-8");
-        echo GorestApi::getComment($id);
+        echo $this->gorestApi->getComment($id);
     }
 
     public function storeComment(): void
@@ -33,7 +44,7 @@ class GorestApiController
         $auth = getallheaders()['Authorization'];
         if ($auth) {
             header("Content-type: application/json; charset=utf-8");
-            GorestApi::storeComment($auth);
+            $this->gorestApi->storeComment($auth);
         } else {
             echo "Auth problem";
         }
@@ -44,7 +55,7 @@ class GorestApiController
         $auth = getallheaders()['Authorization'];
         if ($auth) {
             header("Content-type: application/json; charset=utf-8");
-            GorestApi::putComment($auth, $id);
+            $this->gorestApi->putComment($auth, $id);
         } else {
             echo "Auth problem";
         }
@@ -56,7 +67,7 @@ class GorestApiController
         $auth = getallheaders()['Authorization'];
         if ($auth) {
             header("Content-type: application/json; charset=utf-8");
-            GorestApi::patchComment($auth, $id);
+            $this->gorestApi->patchComment($auth, $id);
         } else {
             echo "Auth problem";
         }
@@ -67,11 +78,10 @@ class GorestApiController
         $auth = getallheaders()['Authorization'];
         if ($auth) {
             header("Content-type: application/json; charset=utf-8");
-            GorestApi::deleteComment($id, $auth);
+            $this->gorestApi->deleteComment($id, $auth);
         } else {
             echo "Auth problem";
         }
     }
-
 
 }
