@@ -11,7 +11,7 @@ class CommentsControllerTest extends TestCase
      *
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $commentsControllerMock = $this->getMockBuilder(CommentsController::class)
             ->onlyMethods(['render'])

@@ -6,7 +6,10 @@ use PHPUnit\Framework\TestCase;
 
 class CommentsModelTest extends TestCase
 {
-    public function testStore()
+    /**
+     * @return void
+     */
+    public function testStore(): void
     {
         $commentModel = new Comment;
         $db = DBConnection::getInstance();
@@ -18,7 +21,10 @@ class CommentsModelTest extends TestCase
         $db->rollBack();
     }
 
-    public function testGetByID()
+    /**
+     * @return void
+     */
+    public function testGetByID(): void
     {
         $commentModel = new Comment;
         $db = DBConnection::getInstance();
@@ -31,7 +37,10 @@ class CommentsModelTest extends TestCase
         $db->rollBack();
     }
 
-    public function testDelete()
+    /**
+     * @return void
+     */
+    public function testDelete(): void
     {
         $commentModel = new Comment;
         $db = DBConnection::getInstance();

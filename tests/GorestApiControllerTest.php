@@ -7,9 +7,10 @@ use PHPUnit\Framework\TestCase;
 class GorestApiControllerTest extends TestCase
 {
     /**
+     * @return void
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
-    public function testGetComments()
+    public function testGetComments(): void
     {
         $gorestApiStub = $this->createStub(GorestApi::class);
         $gorestApiStub->expects($this->any())
@@ -22,9 +23,10 @@ class GorestApiControllerTest extends TestCase
     }
 
     /**
+     * @return void
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
-    public function testGetComment()
+    public function testGetComment(): void
     {
         $gorestApiMock = $this->createMock(GorestApi::class);
         $gorestApiMock->expects($this->any())
@@ -39,7 +41,7 @@ class GorestApiControllerTest extends TestCase
     /**
      * @return void
      */
-    public function testStoreComment()
+    public function testStoreComment(): void
     {
         $curl = curl_init();
         $options = [
@@ -63,7 +65,7 @@ class GorestApiControllerTest extends TestCase
     /**
      * @return void
      */
-    public function testPutComment()
+    public function testPutComment(): void
     {
         $curl = curl_init();
         $options = [
@@ -87,7 +89,7 @@ class GorestApiControllerTest extends TestCase
     /**
      * @return void
      */
-    public function testPatchComment()
+    public function testPatchComment(): void
     {
         $curl = curl_init();
         $options = [
@@ -111,7 +113,7 @@ class GorestApiControllerTest extends TestCase
     /**
      * @return void
      */
-    public function testDeleteComment()
+    public function testDeleteComment(): void
     {
         $curl = curl_init();
         $options = [
@@ -149,5 +151,4 @@ class GorestApiControllerTest extends TestCase
             ]
         ]);
     }
-
 }
