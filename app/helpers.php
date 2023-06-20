@@ -1,6 +1,6 @@
 <?php
 
-function parse_raw_http_request(array &$a_data)
+function parse_raw_http_request(array &$a_data): void
 {
     // read incoming data
     $input = file_get_contents('php://input');

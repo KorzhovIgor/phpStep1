@@ -29,7 +29,7 @@ class Comment
         $preparedRequest->execute($params);
     }
 
-    public function getByID(string $id)
+    public function getByID(string $id): string
     {
         $sql = <<<SQL
             SELECT * 

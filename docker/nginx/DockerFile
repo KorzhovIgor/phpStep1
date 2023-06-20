@@ -1,0 +1,8 @@
+web:
+  image: nginx:latest
+  ports:
+    - "8080:80"
+  volumes:
+    - ../../:/code
+    - ./conf/ls
+    - ./conf/site.conf:/etc/nginx/sites-available/site.conf

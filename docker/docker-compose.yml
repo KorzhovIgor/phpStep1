@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf/site.conf:/etc/nginx/conf.d/site.conf
+  app:
+    build:
+      dockerfile: ./php/Dockerfile
+    volumes:
+      - ../:/code
+  mysql:
+    image: mysql:latest
+    volumes:
+      - mysqldata:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: user
+      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: stratdb
+volumes:
+  mysqldata:
+
