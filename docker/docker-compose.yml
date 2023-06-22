@@ -1,28 +1,30 @@
 version: '3.8'
 services:
-  web:
+  nginx:
     image: nginx:latest
+    container_name: nginx
     ports:
       - "80:80"
     volumes:
       - ./nginx/conf/site.conf:/etc/nginx/conf.d/site.conf
-  app:
+  php:
     build:
-      dockerfile: ./php/Dockerfile
+      context: ./php
+    container_name: php
     volumes:
-      - ../:/code
-  mysql:
-    image: mysql:latest
-    volumes:
-      - mysqldata:/var/lib/mysql
+      - ../:/var/www/code
     ports:
-      - "3306:3306"
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_USER: user
-      MYSQL_PASSWORD: secret
-      MYSQL_DATABASE: stratdb
-volumes:
-  mysqldata:
-
+      - "9000:9000"
+  mysql:
+    build:
+      context: ./mysql
+      args:
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    container_name: mysql
+    volumes:
+      - ./mysqldata:/var/lib/mysql
+    ports:
+      - "${MYSQL_PORT}:3306"

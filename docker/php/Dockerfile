@@ -2,15 +2,7 @@ FROM php:8.2-fpm-alpine
 
 RUN docker-php-ext-install pdo pdo_mysql
 
-ENV COMPOSER_ALLOW_SUPERUSER=1
+WORKDIR /var/www/code
 
-COPY --from=composer:2.5.5 /usr/bin/composer /usr/bin/composer
-
-COPY ./composer.* ./
-
-RUN composer install --prefer-dist --no-dev --no-scripts --no-progress --no-interaction
-
-COPY ../ /code
-
-
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
